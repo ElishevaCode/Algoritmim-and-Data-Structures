@@ -70,6 +70,7 @@ namespace DataAlgoritmim
         public static int count = 0;
 
         //Given the binary tree and you have to find out the n-th node of inorder traversal.
+        //Time Complexity: o(n)  
         public static void NthInorder(Node node, int n)
         {
             if (node == null)
@@ -86,6 +87,7 @@ namespace DataAlgoritmim
         }
 
         //Given a Binary Tree, check if all leaves are at same level or not. 
+        //Time Complexity: o(n)  
         public static bool checkLevelLeafNode(Node root)
         {
             if (IsSameLevel(root) == -1)
