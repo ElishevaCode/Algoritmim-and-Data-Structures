@@ -1,7 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+//Explanation of the Class
+//I implemented 3 types of graphs:
+//1. Adg.List:
+//    Represented by a list of Nodes - an object that contains a data and a list of the nodes to
+//    which it is linked
+//2. Adg.List:
+//    Represented by a dictionary whose key is the content of the element
+//    And the value is the list of nodes to which it is linked
+//3. Adg.Matrix:
+//    Represented by a matrix
 
 namespace DataAlgoritmim
 {
