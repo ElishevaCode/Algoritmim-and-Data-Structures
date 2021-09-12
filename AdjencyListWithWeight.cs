@@ -29,7 +29,7 @@ namespace DataAlgoritmim
             adjList[v].AddLast(new KeyValuePair<T, int>(u, weight));
         }
 
-
+        
         public Dictionary<T, int> Dijkstra(T source, T target)
         {
             Dictionary<T, int> distancesFromSource = adjList.ToDictionary(k => k.Key, v => int.MaxValue);
@@ -67,12 +67,14 @@ namespace DataAlgoritmim
             return distancesFromSource;
         }
 
+        //A function that returns the whight of edge from u to v
         int whight(T u, T v)
         {
             KeyValuePair<T, int> whightV = adjList[u].Where(x => x.Key.Equals(v)).FirstOrDefault();
             return whightV.Value;
         }
 
+        //A function that returns the minimum distance from u to v
         public void distanceFromUtoV(T u, T v)
         {
             Dictionary<T, int> dic = Dijkstra(u, v);
