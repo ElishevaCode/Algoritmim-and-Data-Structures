@@ -27,6 +27,11 @@ namespace DataAlgoritmim
         }
 
 
+        void enqueueIfExist(Node node, Queue<Node> queue)
+        {
+            if (node != null) queue.Enqueue(node);
+        }
+
         //BFS
         //Time Complexity: o(n)
         public void BFS()
@@ -38,15 +43,8 @@ namespace DataAlgoritmim
                 Node tempNode = queue.Dequeue();
                 Console.Write(tempNode.Data + " ");
 
-                if (tempNode.Left != null)
-                {
-                    queue.Enqueue(tempNode.Left);
-                }
-
-                if (tempNode.Right != null)
-                {
-                    queue.Enqueue(tempNode.Right);
-                }
+                enqueueIfExist(tempNode.Left, queue);
+                enqueueIfExist(tempNode.Right, queue);
             }
         }
 
@@ -99,13 +97,13 @@ namespace DataAlgoritmim
         {
             if (root == null)
                 return 0;
-            int l = IsSameLevel(root.Left);
-            int r = IsSameLevel(root.Right);
-            if (root.Left != null && root.Right != null && (l == -1 || r == -1 || l != r ))
+            int left = IsSameLevel(root.Left);
+            int right = IsSameLevel(root.Right);
+            if (root.Left != null && root.Right != null && (left == -1 || right == -1 || left != right))
                 return -1;
             if (root.Left == null)
-                return r + 1;
-            return l + 1;
+                return right + 1;
+            return left + 1;
         }
 
     }

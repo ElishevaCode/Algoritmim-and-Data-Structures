@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Linq;
 
 namespace DataAlgoritmim
 {
@@ -14,7 +15,7 @@ namespace DataAlgoritmim
 
         //A function that puts the elements of the array into a dictionary
         //and counts how many identical elements there are in an array
-        public static Dictionary<int, int> arrToDictionary(int[] arr)
+        static Dictionary<int, int> arrToDictionary(int[] arr)
         {
             Dictionary<int, int> dic = new Dictionary<int, int>();
             foreach (var i in arr)
@@ -27,12 +28,32 @@ namespace DataAlgoritmim
             return dic;
         }
 
+        static int maxElement(Dictionary<int, int> dic)
+        {
+            int max = int.MinValue;
+            int count = 0;
+            foreach (var item in dic)
+            {
+                if (item.Value > count)
+                {
+                    count = item.Value;
+                    max = item.Key;
+                }
+            }
+            dic[max] = 0;
+            return max;
+        }
+
+        static int getMaxKey(Dictionary<int,int> dic)
+        {
+            return dic.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+        }
         //1.
         //Given an array of size N with repeated numbers, You Have to Find the top three repeated numbers. 
         //Note : If Number comes same number of times then our output is one who comes first in array
-        public static void top3Repeated(int[] arr)
+        public static void top3Repeated(int[] arr,int max)
         {
-            if (arr.Length < 3)
+            if (arr.Length < max)
             {
                 Console.WriteLine("invalid!!!");
                 return;
@@ -41,33 +62,48 @@ namespace DataAlgoritmim
             //Adding the elements of the array to the dictionary 
             Dictionary<int, int> dic = arrToDictionary(arr);
 
-            //Create pairs for 3 maximum values
-            KeyValuePair<int, int> max1 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
-            KeyValuePair<int, int> max2 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
-            KeyValuePair<int, int> max3 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
+            List<int> listOfMax = new List<int>();
+            int max1;
 
-            //Transition on the dictionary to find the maximum 3 pairs
-            foreach (var elem in dic)
+            for (int i = 0; i < max; i++)
             {
-                if (elem.Value > max1.Value)
-                {
-                    max3 = max2;
-                    max2 = max1;
-                    max1 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-                }
-                else if (elem.Value > max2.Value)
-                {
-                    max3 = max2;
-                    max2 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-                }
-                else if (elem.Value > max3.Value)
-                {
-                    max3 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-                }
+                max1 = getMaxKey(dic);
+                dic[max1] = 0;
+                listOfMax.Add(max1);
+            }
+            foreach (int i in listOfMax)
+            {
+                Console.WriteLine(i + " ");
             }
 
-            //Printed the values
-            Console.WriteLine("max1: "+max1+", max2: "+ max2 + ", max3: "+max3);
+
+            ////Create pairs for 3 maximum values
+            //KeyValuePair<int, int> max1 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
+            //KeyValuePair<int, int> max2 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
+            //KeyValuePair<int, int> max3 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
+
+            ////Transition on the dictionary to find the maximum 3 pairs
+            //foreach (var elem in dic)
+            //{
+            //    if (elem.Value > max1.Value)
+            //    {
+            //        max3 = max2;
+            //        max2 = max1;
+            //        max1 = new KeyValuePair<int, int>(elem.Key, elem.Value);
+            //    }
+            //    else if (elem.Value > max2.Value)
+            //    {
+            //        max3 = max2;
+            //        max2 = new KeyValuePair<int, int>(elem.Key, elem.Value);
+            //    }
+            //    else if (elem.Value > max3.Value)
+            //    {
+            //        max3 = new KeyValuePair<int, int>(elem.Key, elem.Value);
+            //    }
+            //}
+
+            ////Printed the values
+            //Console.WriteLine("max1: " + max1 + ", max2: " + max2 + ", max3: " + max3);
 
         }
 

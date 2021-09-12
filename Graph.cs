@@ -22,20 +22,20 @@ namespace DataAlgoritmim
     public class AdjacencyList<T>
     {
         LinkedList<Node<T>> adjList;
-        int _v;
+        int _n;
 
 
         public AdjacencyList()
         {
             adjList = new LinkedList<Node<T>>();
-            _v = 0;
+            _n = 0;
         }
 
         // A function to add a Node
         //Time complexity: O(1)
         public void addNode(T data)
         {
-            _v++;
+            _n++;
             adjList.AddLast(new Node<T>(data));
         }
 
@@ -47,9 +47,9 @@ namespace DataAlgoritmim
             {
                 if (list.Data.Equals(u))
                 {
-                    Node<T> _v = adjList.Where(x => x.Data.Equals(v)).FirstOrDefault();
-                    if (_v != null)
-                        list.Edges.AddLast(_v);
+                    Node<T> _n = adjList.Where(x => x.Data.Equals(v)).FirstOrDefault();
+                    if (_n != null)
+                        list.Edges.AddLast(_n);
                     else
                         Console.WriteLine("Can't add a Node v");
                 }
@@ -62,9 +62,9 @@ namespace DataAlgoritmim
         Dictionary<T, bool> listToDictionary()
         {
             Dictionary<T, bool> visited = new Dictionary<T, bool>();
-            foreach (Node<T> v in adjList)
+            foreach (Node<T> n in adjList)
             {
-                visited.Add(v.Data, false);
+                visited.Add(n.Data, false);
             }
             return visited;
         }
@@ -75,26 +75,26 @@ namespace DataAlgoritmim
         {
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (Node<T> v in adjList)
+            foreach (Node<T> n in adjList)
             {
-                if (!visited[v.Data])
-                    BFSUtil(v, visited);
+                if (!visited[n.Data])
+                    BFSUtil(n, visited);
 
             }
             Console.WriteLine();
         }
 
-        void BFSUtil(Node<T> v, Dictionary<T, bool> visited)
+        void BFSUtil(Node<T> n, Dictionary<T, bool> visited)
         {
             Queue<Node<T>> queue = new Queue<Node<T>>();
-            queue.Enqueue(v);
+            queue.Enqueue(n);
 
             while (queue.Count != 0)
             {
-                v = queue.Dequeue();
-                Console.Write(v.Data + " ");
+                n = queue.Dequeue();
+                Console.Write(n.Data + " ");
 
-                foreach (Node<T> i in v.Edges)
+                foreach (Node<T> i in n.Edges)
                 {
                     if (!visited[i.Data])
                     {
@@ -111,20 +111,20 @@ namespace DataAlgoritmim
         {
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (Node<T> v in adjList)
+            foreach (Node<T> n in adjList)
             {
-                if (!visited[v.Data])
-                    DFSUtil(v, visited);
+                if (!visited[n.Data])
+                    DFSUtil(n, visited);
             }
             Console.WriteLine();
         }
 
-        void DFSUtil(Node<T> v, Dictionary<T, bool> visited)
+        void DFSUtil(Node<T> n, Dictionary<T, bool> visited)
         {
-            visited[v.Data] = true;
-            Console.Write(v.Data + " ");
+            visited[n.Data] = true;
+            Console.Write(n.Data + " ");
 
-            foreach (Node<T> i in v.Edges)
+            foreach (Node<T> i in n.Edges)
             {
                 if (!visited[i.Data])
                     DFSUtil(i, visited);
@@ -138,10 +138,10 @@ namespace DataAlgoritmim
             Stack<T> stack = new Stack<T>();
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (Node<T> v in adjList)
+            foreach (Node<T> n in adjList)
             {
-                if (!visited[v.Data])
-                    TopologicalSortUtil(v, visited, stack);
+                if (!visited[n.Data])
+                    TopologicalSortUtil(n, visited, stack);
             }
 
             foreach (T node in stack)
@@ -151,16 +151,16 @@ namespace DataAlgoritmim
             Console.WriteLine();
         }
 
-        void TopologicalSortUtil(Node<T> v, Dictionary<T, bool> visited, Stack<T> stack)
+        void TopologicalSortUtil(Node<T> n, Dictionary<T, bool> visited, Stack<T> stack)
         {
-            visited[v.Data] = true;
+            visited[n.Data] = true;
 
-            foreach (Node<T> node in v.Edges)
+            foreach (Node<T> node in n.Edges)
             {
                 if (!visited[node.Data])
                     TopologicalSortUtil(node, visited, stack);
             }
-            stack.Push(v.Data);
+            stack.Push(n.Data);
         }
 
         //Exercises 
@@ -173,11 +173,11 @@ namespace DataAlgoritmim
             Dictionary<T, bool> visited = listToDictionary();
             int countTrees = 0;
 
-            foreach (Node<T> v in adjList)
+            foreach (Node<T> n in adjList)
             {
-                if (!visited[v.Data])
+                if (!visited[n.Data])
                 {
-                    DFSUtil(v, visited);
+                    DFSUtil(n, visited);
                     countTrees++;
                 }
             }
@@ -247,8 +247,6 @@ namespace DataAlgoritmim
     }
 
 
-
-
     // This class represents a directed graph, using adjacency list
     //implements with a dictionary: key = data of a node
     //                              value = list of an edges
@@ -281,9 +279,9 @@ namespace DataAlgoritmim
         Dictionary<T, bool> listToDictionary()
         {
             Dictionary<T, bool> visited = new Dictionary<T, bool>();
-            foreach (T v in adjList.Keys)
+            foreach (T n in adjList.Keys)
             {
-                visited.Add(v, false);
+                visited.Add(n, false);
             }
             return visited;
         }
@@ -294,25 +292,25 @@ namespace DataAlgoritmim
         {
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (T v in adjList.Keys)
+            foreach (T n in adjList.Keys)
             {
-                if (!visited[v])
-                    BFSUtil(v, visited);
+                if (!visited[n])
+                    BFSUtil(n, visited);
             }
             Console.WriteLine();
         }
 
-        void BFSUtil(T v, Dictionary<T, bool> visited)
+        void BFSUtil(T n, Dictionary<T, bool> visited)
         {
             Queue<T> queue = new Queue<T>();
-            queue.Enqueue(v);
+            queue.Enqueue(n);
 
             while (queue.Count != 0)
             {
-                v = queue.Dequeue();
-                Console.Write(v + " ");
+                n = queue.Dequeue();
+                Console.Write(n + " ");
 
-                foreach (T i in adjList[v])
+                foreach (T i in adjList[n])
                 {
                     if (!visited[i])
                     {
@@ -329,21 +327,21 @@ namespace DataAlgoritmim
         {
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (T v in adjList.Keys)
+            foreach (T n in adjList.Keys)
             {
-                if (!visited[v])
-                    DFSUtil(v, visited);
+                if (!visited[n])
+                    DFSUtil(n, visited);
             }
             Console.WriteLine();
         }
 
 
-        void DFSUtil(T v, Dictionary<T, bool> visited)
+        void DFSUtil(T n, Dictionary<T, bool> visited)
         {
-            visited[v] = true;
-            Console.Write(v + " ");
+            visited[n] = true;
+            Console.Write(n + " ");
 
-            foreach (T i in adjList[v])
+            foreach (T i in adjList[n])
             {
                 if (!visited[i])
                     DFSUtil(i, visited);
@@ -357,10 +355,10 @@ namespace DataAlgoritmim
             Stack<T> stack = new Stack<T>();
             Dictionary<T, bool> visited = listToDictionary();
 
-            foreach (T v in adjList.Keys)
+            foreach (T n in adjList.Keys)
             {
-                if (!visited[v])
-                    TopologicalSortUtil(v, visited, stack);
+                if (!visited[n])
+                    TopologicalSortUtil(n, visited, stack);
             }
 
             foreach (T node in stack)
@@ -370,16 +368,16 @@ namespace DataAlgoritmim
             Console.WriteLine();
         }
 
-        void TopologicalSortUtil(T v, Dictionary<T, bool> visited, Stack<T> stack)
+        void TopologicalSortUtil(T n, Dictionary<T, bool> visited, Stack<T> stack)
         {
-            visited[v] = true;
+            visited[n] = true;
 
-            foreach (T node in adjList[v])
+            foreach (T node in adjList[n])
             {
                 if (!visited[node])
                     TopologicalSortUtil(node, visited, stack);
             }
-            stack.Push(v);
+            stack.Push(n);
         }
     }
 
@@ -391,17 +389,17 @@ namespace DataAlgoritmim
     public class AdjacencyMatrix
     {
         int[,] adjMatrix;
-        int _v;
+        int _n;
 
         //Constructor with a parameter v - number of vertices in a graph
         //Time complexity: O(v^2)
-        public AdjacencyMatrix(int v)
+        public AdjacencyMatrix(int n)
         {
-            adjMatrix = new int[v, v];
-            _v = v;
+            adjMatrix = new int[n, n];
+            _n = n;
 
-            for (int i = 0; i < v; i++)
-                for (int j = 0; j < v; j++)
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
                     adjMatrix[i, j] = 0;
         }
 
@@ -409,34 +407,34 @@ namespace DataAlgoritmim
         //Time complexity: O(V^2)
         public void addNode(int x)
         {
-            _v += x;
-            int[,] adjMatrixTemp = new int[_v, _v];
+            _n += x;
+            int[,] adjMatrixTemp = new int[_n, _n];
 
-            for (int i = 0; i < _v; i++)
-                for (int j = 0; j < _v; j++)
+            for (int i = 0; i < _n; i++)
+                for (int j = 0; j < _n; j++)
                     adjMatrixTemp[i, j] = adjMatrix[i, j];
             adjMatrix = adjMatrixTemp;
         }
 
         // A function to add an edge with a weight
         //Time complexity: O(1)
-        public void addEdge(int u, int v, int weight)
+        public void addEdge(int u, int n, int weight)
         {
-            if (u >= _v || v >= _v)
+            if (u >= _n || n >= _n)
                 Console.WriteLine("Node does not exists!");
-            if (u == v)
+            if (u == n)
                 Console.WriteLine("Same Node!");
 
-            adjMatrix[u, v] = weight;
+            adjMatrix[u, n] = weight;
         }
 
         //BFS
         //Time complexity: O(v^2)
         public void BFS()
         {
-            bool[] visited = new bool[_v];
+            bool[] visited = new bool[_n];
 
-            for (int i = 0; i < _v; i++)
+            for (int i = 0; i < _n; i++)
             {
                 if (visited[i] == false)
                     BFSUtil(i, visited);
@@ -444,19 +442,19 @@ namespace DataAlgoritmim
             Console.WriteLine();
         }
 
-        void BFSUtil(int v, bool[] visited)
+        void BFSUtil(int n, bool[] visited)
         {
             Queue<int> queue = new Queue<int>();
-            queue.Enqueue(v);
+            queue.Enqueue(n);
 
             while (queue.Count != 0)
             {
-                v = queue.Dequeue();
-                Console.Write(v + " ");
+                n = queue.Dequeue();
+                Console.Write(n + " ");
 
-                for (int i = 0; i < _v; i++)
+                for (int i = 0; i < _n; i++)
                 {
-                    if (adjMatrix[v, i] != 0 && !visited[i])
+                    if (adjMatrix[n, i] != 0 && !visited[i])
                     {
                         queue.Enqueue(i);
                         visited[i] = true;
@@ -469,23 +467,23 @@ namespace DataAlgoritmim
         //Time complexity: O(v^2)
         public void DFS()
         {
-            bool[] visited = new bool[_v];
+            bool[] visited = new bool[_n];
 
-            for (int i = 0; i < _v; i++)
+            for (int i = 0; i < _n; i++)
             {
                 if (visited[i] == false)
                     DFSUtil(i, visited);
             }
         }
 
-        void DFSUtil(int v, bool[] visited)
+        void DFSUtil(int n, bool[] visited)
         {
-            visited[v] = true;
-            Console.Write(v + " ");
+            visited[n] = true;
+            Console.Write(n + " ");
 
-            for (int i = 0; i < _v; i++)
+            for (int i = 0; i < _n; i++)
             {
-                if (adjMatrix[v, i] != 0 && !visited[i])
+                if (adjMatrix[n, i] != 0 && !visited[i])
                     DFSUtil(i, visited);
             }
         }
@@ -496,9 +494,9 @@ namespace DataAlgoritmim
         {
             Stack<int> stack = new Stack<int>();
 
-            var visited = new bool[_v];
+            var visited = new bool[_n];
 
-            for (int i = 0; i < _v; i++)
+            for (int i = 0; i < _n; i++)
             {
                 if (visited[i] == false)
                     TopologicalSortUtil(i, visited, stack);
@@ -510,16 +508,16 @@ namespace DataAlgoritmim
             }
         }
 
-        void TopologicalSortUtil(int v, bool[] visited, Stack<int> stack)
+        void TopologicalSortUtil(int n, bool[] visited, Stack<int> stack)
         {
-            visited[v] = true;
+            visited[n] = true;
 
-            for (int i = 0; i < _v; i++)
+            for (int i = 0; i < _n; i++)
             {
-                if (adjMatrix[v, i] != 0 && !visited[i])
+                if (adjMatrix[n, i] != 0 && !visited[i])
                     TopologicalSortUtil(i, visited, stack);
             }
-            stack.Push(v);
+            stack.Push(n);
         }
     }
 }
