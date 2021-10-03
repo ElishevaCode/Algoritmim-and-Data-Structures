@@ -26,13 +26,11 @@ namespace DataAlgoritmim
             root = new Node(key);
         }
 
-
         void enqueueIfExist(Node node, Queue<Node> queue)
         {
             if (node != null) queue.Enqueue(node);
         }
 
-        //BFS
         //Time Complexity: o(n)
         public void BFS()
         {
@@ -48,7 +46,6 @@ namespace DataAlgoritmim
             }
         }
 
-        //DFS
         //Time Complexity: o(n)  
         void DFSUtil(Node tree)
         {
@@ -88,17 +85,17 @@ namespace DataAlgoritmim
         //Time Complexity: o(n)  
         public static bool checkLevelLeafNode(Node root)
         {
-            if (IsSameLevel(root) == -1)
+            if (AreLeavesSameLevel(root) == -1)
                 return false;
             return true;
         }
 
-        public static int IsSameLevel(Node root)
+        public static int AreLeavesSameLevel(Node root)
         {
             if (root == null)
                 return 0;
-            int left = IsSameLevel(root.Left);
-            int right = IsSameLevel(root.Right);
+            int left = AreLeavesSameLevel(root.Left);
+            int right = AreLeavesSameLevel(root.Right);
             if (root.Left != null && root.Right != null && (left == -1 || right == -1 || left != right))
                 return -1;
             if (root.Left == null)

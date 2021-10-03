@@ -186,11 +186,11 @@ namespace DataAlgoritmim
 
             maps.addEdge("Mitzpe Ramon", "Eilat", 120);
 
-            maps.distanceFromUtoV("Mitzpe Ramon", "Eilat");
+            maps.minDistanceFromUtoV("Mitzpe Ramon", "Eilat");
 
-            maps.distanceFromUtoV("Nehariya", "Tiberias");
+            maps.minDistanceFromUtoV("Nehariya", "Tiberias");
 
-            maps.distanceFromUtoV("Tel Aviv", "Eilat");
+            maps.minDistanceFromUtoV("Tel Aviv", "Eilat");
 
         }
     }

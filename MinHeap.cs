@@ -9,16 +9,22 @@ namespace DataAlgoritmim
         static KeyValuePair<T, int>[] minHeap;
         static int size; // Saves the number of elements in the array
 
-        //A function that accepts an array that is not a minimum heap and arranges it into a heap
-        public static KeyValuePair<T, int>[] BuildHeap(KeyValuePair<T, int>[] arr)
+        public static KeyValuePair<T, int>[] BuildHeapFromArr(KeyValuePair<T, int>[] arr)
         {
             minHeap = arr;
             size = arr.Length - 1;
+
+            orderMinHeap();
+
+            return minHeap;
+        }
+
+        static void orderMinHeap()
+        {
             for (int i = Parent(size); i >= 0; i--)
             {
                 SiftDoun(i);
             }
-            return minHeap;
         }
 
         //A function that removes the root of the heap - the minimal element
@@ -32,31 +38,32 @@ namespace DataAlgoritmim
             return result;
         }
 
-        //A function that changes the value of the element with a new value
         public static void ChangePriority(KeyValuePair<T, int> newNum)
         {
-            int i;
-            for (i = 0; i < minHeap.Length; i++)
+            int i = indexOfElement(newNum);
+            if (i != -1)
             {
-                if (minHeap[i].Key.Equals(newNum.Key))
-                    break;
-            }
-
-            if (i < size + 1)
-            {
-                KeyValuePair<T, int> oldnum = minHeap[i];
+                int oldNum = minHeap[i].Value;
                 minHeap[i] = newNum;
-                if (newNum.Value < oldnum.Value)
+                if (newNum.Value < oldNum)
                     SiftUp(i);
                 else
                     SiftDoun(i);
             }
         }
 
-        //"Rolls" an element down
+        static int indexOfElement(KeyValuePair<T, int> elem)
+        {
+            for (int i = 0; i < minHeap.Length; i++)
+            {
+                if (minHeap[i].Key.Equals(elem.Key))
+                    return i;
+            }
+            return -1;
+        }
+
         private static void SiftDoun(int i)
         {
-            KeyValuePair<T, int> temp;
             int maxIndex = 0;
             while (i <= size && ((LeftChild(i) <= size && minHeap[i].Value > minHeap[LeftChild(i)].Value) || (RightChild(i) <= size && minHeap[i].Value > minHeap[RightChild(i)].Value)))
             {
@@ -64,26 +71,29 @@ namespace DataAlgoritmim
                     maxIndex = LeftChild(i);
                 if (RightChild(i) <= size && minHeap[RightChild(i)].Value < minHeap[maxIndex].Value)
                     maxIndex = RightChild(i);
-                temp = minHeap[i];
-                minHeap[i] = minHeap[maxIndex];
-                minHeap[maxIndex] = temp;
+
+                SwitchingBetween2Values(i, maxIndex);
                 i = maxIndex;
             }
         }
 
-        //"Rolls" an element up
         private static void SiftUp(int i)
         {
             while (Parent(i) >= 0 && (minHeap[i].Value == int.MinValue || minHeap[Parent(i)].Value > minHeap[i].Value))
             {
-                KeyValuePair<T, int> temp = minHeap[Parent(i)];
-                minHeap[Parent(i)] = minHeap[i];
-                minHeap[i] = temp;
+                SwitchingBetween2Values(Parent(i), i);
                 i = Parent(i);
             }
         }
 
-        //Returns the index of the parent
+        private static void SwitchingBetween2Values(int index1, int index2)
+        {
+            KeyValuePair<T, int> temp;
+            temp = minHeap[index1];
+            minHeap[index1] = minHeap[index2];
+            minHeap[index2] = temp;
+        }
+
         private static int Parent(int i)
         {
             if (i == 0)
@@ -93,7 +103,6 @@ namespace DataAlgoritmim
             return i / 2;
         }
 
-        //Returns the index of the left child
         private static int LeftChild(int i)
         {
             if (i == 0)
@@ -101,7 +110,6 @@ namespace DataAlgoritmim
             return i * 2 + 1;
         }
 
-        //Returns the index of the right child
         private static int RightChild(int i)
         {
             if (i == 0)

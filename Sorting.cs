@@ -6,7 +6,7 @@ namespace DataAlgoritmim
 {
     class Sorting
     {
-        //Bubble Sort
+
         //Time complexity: O(N^2)
         public static void BubbleSort(int[] arr)
         {
@@ -28,7 +28,6 @@ namespace DataAlgoritmim
             }
         }
 
-        //Merge Sort
         //Time complexity: O(N*Log(N))
         public static void MergeSort(int[] arr)
         {
@@ -95,33 +94,31 @@ namespace DataAlgoritmim
             }
         }
 
-
-        //Quick Sort
         //Time complexity: avg( O(N*Log(N)) )
         public static void QuickSort(int[] arr)
         {
             QuickSort(arr, 0, arr.Length - 1);
         }
 
-        static void QuickSort(int[] arr, int l, int r)
+        static void QuickSort(int[] arr, int left, int right)
         {
             int i;
-            if (l < r)
+            if (left < right)
             {
-                i = Partition(arr, l, r);
+                i = Partition(arr, left, right);
 
-                QuickSort(arr, l, i - 1);
-                QuickSort(arr, i + 1, r);
+                QuickSort(arr, left, i - 1);
+                QuickSort(arr, i + 1, right);
             }
         }
 
-        static int Partition(int[] arr, int l, int r)
+        static int Partition(int[] arr, int left, int right)
         {
             int temp;
-            int p = arr[r];
-            int i = l - 1;
+            int p = arr[right];
+            int i = left - 1;
 
-            for (int j = l; j <= r - 1; j++)
+            for (int j = left; j <= right - 1; j++)
             {
                 if (arr[j] <= p)
                 {
@@ -133,29 +130,29 @@ namespace DataAlgoritmim
             }
 
             temp = arr[i + 1];
-            arr[i + 1] = arr[r];
-            arr[r] = temp;
+            arr[i + 1] = arr[right];
+            arr[right] = temp;
             return i + 1;
         }
 
 
         //Binary Search (on a sorted array)
         //Time complexity: O(Log(N))
-        public static int BSA(int[] arr,int x)
+        public static int BSA(int[] arr, int x)
         {
-            int l = 0, r = arr.Length - 1;
-            while (l <= r)
+            int left = 0, right = arr.Length - 1;
+            while (left <= right)
             {
-                int m = l + (r - l) / 2;
+                int middle = left + (right - left) / 2;
 
-                if (arr[m] == x)
-                    return m;
+                if (arr[middle] == x)
+                    return middle;
 
-                if (arr[m] < x)
-                    l = m + 1;
+                if (arr[middle] < x)
+                    left = middle + 1;
 
                 else
-                    r = m - 1;
+                    right = middle - 1;
             }
             return -1;
         }

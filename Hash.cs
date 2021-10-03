@@ -15,7 +15,7 @@ namespace DataAlgoritmim
 
         //A function that puts the elements of the array into a dictionary
         //and counts how many identical elements there are in an array
-        static Dictionary<int, int> arrToDictionary(int[] arr)
+        static Dictionary<int, int> ConvertArrToDictionary(int[] arr)
         {
             Dictionary<int, int> dic = new Dictionary<int, int>();
             foreach (var i in arr)
@@ -31,12 +31,12 @@ namespace DataAlgoritmim
         static int maxElement(Dictionary<int, int> dic)
         {
             int max = int.MinValue;
-            int count = 0;
+            int valueMax = 0;
             foreach (var item in dic)
             {
-                if (item.Value > count)
+                if (item.Value > valueMax)
                 {
-                    count = item.Value;
+                    valueMax = item.Value;
                     max = item.Key;
                 }
             }
@@ -48,63 +48,39 @@ namespace DataAlgoritmim
         {
             return dic.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
         }
+
         //1.
         //Given an array of size N with repeated numbers, You Have to Find the top three repeated numbers. 
         //Note : If Number comes same number of times then our output is one who comes first in array
-        public static void top3Repeated(int[] arr,int max)
+        public static void topXRepeated(int[] arr,int x)
         {
-            if (arr.Length < max)
+            if (arr.Length < x)
             {
-                Console.WriteLine("invalid!!!");
+                Console.WriteLine("invalid!");
                 return;
             }
 
-            //Adding the elements of the array to the dictionary 
-            Dictionary<int, int> dic = arrToDictionary(arr);
+            Dictionary<int, int> dic = ConvertArrToDictionary(arr);
 
             List<int> listOfMax = new List<int>();
-            int max1;
+            int max;
 
-            for (int i = 0; i < max; i++)
+            for (int i = 0; i < x; i++)
             {
-                max1 = getMaxKey(dic);
-                dic[max1] = 0;
-                listOfMax.Add(max1);
+                max = getMaxKey(dic);
+                dic[max] = 0;
+                listOfMax.Add(max);
             }
-            foreach (int i in listOfMax)
+
+            printList(listOfMax);
+        }
+
+        static void printList(List<int> list)
+        {
+            foreach (var i in list)
             {
                 Console.WriteLine(i + " ");
             }
-
-
-            ////Create pairs for 3 maximum values
-            //KeyValuePair<int, int> max1 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
-            //KeyValuePair<int, int> max2 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
-            //KeyValuePair<int, int> max3 = new KeyValuePair<int, int>(int.MinValue, int.MinValue);
-
-            ////Transition on the dictionary to find the maximum 3 pairs
-            //foreach (var elem in dic)
-            //{
-            //    if (elem.Value > max1.Value)
-            //    {
-            //        max3 = max2;
-            //        max2 = max1;
-            //        max1 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-            //    }
-            //    else if (elem.Value > max2.Value)
-            //    {
-            //        max3 = max2;
-            //        max2 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-            //    }
-            //    else if (elem.Value > max3.Value)
-            //    {
-            //        max3 = new KeyValuePair<int, int>(elem.Key, elem.Value);
-            //    }
-            //}
-
-            ////Printed the values
-            //Console.WriteLine("max1: " + max1 + ", max2: " + max2 + ", max3: " + max3);
-
         }
 
         //2.
@@ -117,8 +93,7 @@ namespace DataAlgoritmim
             if (arr1.Length != arr2.Length)
                 return false;
 
-            //Adding the elements of the array to the dictionary 
-            Dictionary<int, int> dic = arrToDictionary(arr1);
+            Dictionary<int, int> dic = ConvertArrToDictionary(arr1);
 
             //Comparing 2 arrays 
             //checking - if have a values in the dictionary thats not equal to zero,
@@ -176,7 +151,7 @@ namespace DataAlgoritmim
         //Given an array of n elements.The task is to count the total number of indices (i, j) such that arr[i] = arr[j] and i != j
         public static int countPairs(int[] arr)
         {
-            Dictionary<int, int> dic = arrToDictionary(arr);
+            Dictionary<int, int> dic = ConvertArrToDictionary(arr);
 
             int sumOfPairs = 0;
 
